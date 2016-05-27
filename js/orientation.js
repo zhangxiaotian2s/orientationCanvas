@@ -8,15 +8,18 @@ function imgArrShow(imgarr) {
 	this.loadimgsrc = 'http://7xl619.com1.z0.glb.clouddn.com/load.gif?10010'
 	this.loadingbox = document.querySelector('#loadingbox')
 	this.boolmobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)
-	this.showindex = 0
+	this.showindex = null
+	this.timer=null;
 };
 var imgArrShowPropty = imgArrShow.prototype
 imgArrShowPropty.init = function() {
 	var self = this;
 	self.canvas.setAttribute('width', self.width + 'px');
 	self.canvas.setAttribute('height', self.height + 'px');
+
 	self.loadWait(true)
 	self.loadAllImg();
+	self.drawArrImg(0)
 	if (Boolean(self.boolmobile)) {
 		self.mobileDirection()
 	} else {
@@ -74,7 +77,8 @@ imgArrShowPropty.loadWait = function(bool) {
 		//		self.ctx.clearRect(0, 0, self.width, self.height)
 		//		self.drawArrImg(Math.floor(self.imgarr.length) / 2)
 		self.loadingbox.style.display = 'none'
-		self.drawArrImg(Math.floor(self.imgarr.length) / 2)
+			//		self.drawArrImg(Math.floor(self.imgarr.length) / 2)
+		self.drawArrImg(0)
 	}
 };
 //drawimg 图片进入画布
@@ -87,11 +91,28 @@ imgArrShowPropty.drawArrImg = function(index) {
 		self.showindex = index;
 		var _img = new Image;
 		_img.src = self.imgarr[index];
+		clearInterval(this.timer)
 		_img.onload = function() {
-			self.ctx.clearRect(0, 0, self.width, self.height)
-			var _img_w = self.width;
-			var _img_h = Math.floor((self.width / _img.width) * _img.height);
-			self.ctx.drawImage(_img, 0, 0, _img_w, _img_h);
+			var _s = 1;
+			this.timer = setInterval(function() {
+				if (_s < 0) {
+					clearInterval(this.timer)
+					return
+				}
+				_s -= 0.05
+				self.ctx.clearRect(0, 0, self.width, self.height);
+				var _img_w = self.width;
+				var _img_h = Math.floor((self.width / _img.width) * _img.height);
+				self.ctx.drawImage(_img, 0, 0, _img_w, _img_h);
+				var radialGradient = self.ctx.createLinearGradient(0, 0, self.width, self.height);
+				radialGradient.addColorStop(0, 'rgba(247, 247, 247, ' + _s + ')');
+				radialGradient.addColorStop(1, 'rgba(247, 247, 247,  ' + _s + ')');
+				self.ctx.beginPath();
+				self.ctx.fillRect(0, 0, self.width, self.height);
+				self.ctx.closePath();
+				self.ctx.fillStyle = radialGradient;
+				self.ctx.fill();
+			}, 1000/60)
 		}
 	}
 };
