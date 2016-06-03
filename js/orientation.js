@@ -1,22 +1,26 @@
 function imgArrShow(imgarr) {
 	this.width = document.body.clientWidth > 640 ? 640 : document.body.clientWidth;
 	this.height = this.width;
+	this.box = document.getElementById('detail-canvasbox')
 	this.canvas = document.getElementById('canvas');
-	this.ctx = self.canvas.getContext('2d');
+	this.canvasbk = document.getElementById('canvasbk');
+	this.ctx = this.canvas.getContext('2d');
+	this.ctxbk=this.canvasbk.getContext('2d');
 	this.imgarr = imgarr;
 	this.imglength = this.imgarr.length;
 	this.loadimgsrc = 'http://7xl619.com1.z0.glb.clouddn.com/load.gif?10010'
 	this.loadingbox = document.querySelector('#loadingbox')
 	this.boolmobile = navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)
 	this.showindex = null
-	this.timer=null;
+	this.timer = null;
 };
 var imgArrShowPropty = imgArrShow.prototype
 imgArrShowPropty.init = function() {
 	var self = this;
 	self.canvas.setAttribute('width', self.width + 'px');
 	self.canvas.setAttribute('height', self.height + 'px');
-
+	self.canvasbk.setAttribute('width', self.width + 'px');
+	self.canvasbk.setAttribute('height', self.height + 'px');
 	self.loadWait(true)
 	self.loadAllImg();
 	self.drawArrImg(0)
@@ -54,7 +58,7 @@ imgArrShowPropty.mobileDirection = function() {
 //pc端处理
 imgArrShowPropty.pcMouseMove = function() {
 	var self = this;
-	self.canvas.addEventListener('mousemove', function(e) {
+	self.box.addEventListener('mousemove', function(e) {
 		console.log(this.offsetLeft)
 		var _position_x = e.pageX - this.parentElement.offsetLeft;
 		_position_x < 0 ? 0 : _position_x;
@@ -87,32 +91,20 @@ imgArrShowPropty.drawArrImg = function(index) {
 	if (index < 0) {
 		index = 0;
 	}
+	var _imgbk = new Image();
+	   _imgbk = self.imgarr[self.showindex || index]
 	if (self.showindex != index) {
 		self.showindex = index;
-		var _img = new Image;
+		var _img = new Image();
 		_img.src = self.imgarr[index];
-		clearInterval(this.timer)
 		_img.onload = function() {
-			var _s = 1;
-			this.timer = setInterval(function() {
-				if (_s < 0) {
-					clearInterval(this.timer)
-					return
-				}
-				_s -= 0.05
-				self.ctx.clearRect(0, 0, self.width, self.height);
-				var _img_w = self.width;
-				var _img_h = Math.floor((self.width / _img.width) * _img.height);
-				self.ctx.drawImage(_img, 0, 0, _img_w, _img_h);
-				var radialGradient = self.ctx.createLinearGradient(0, 0, self.width, self.height);
-				radialGradient.addColorStop(0, 'rgba(247, 247, 247, ' + _s + ')');
-				radialGradient.addColorStop(1, 'rgba(247, 247, 247,  ' + _s + ')');
-				self.ctx.beginPath();
-				self.ctx.fillRect(0, 0, self.width, self.height);
-				self.ctx.closePath();
-				self.ctx.fillStyle = radialGradient;
-				self.ctx.fill();
-			}, 1000/60)
+			clearInterval(self.timer)
+			var _img_w = self.width;
+			var _img_h = Math.floor((self.width / _img.width) * _img.height);
+			self.ctx.clearRect(0, 0, self.width, self.height);
+			self.ctx.drawImage(_img, 0, 0, _img_w, _img_h);
+			self.ctxbk.drawImage(_img, 0, 0, _img_w, _img_h);
+			
 		}
 	}
 };
