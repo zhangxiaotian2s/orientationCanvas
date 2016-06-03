@@ -42,9 +42,11 @@ imgArrShowPropty.loadAllImg = function() {
 imgArrShowPropty.mobileDirection = function() {
 	var self = this;
 	window.addEventListener("deviceorientation", function(e) {
-		//					      e.gamma //横向翻转
-		var _gamma = Math.ceil(e.gamma + 90);
-		var _index = Math.floor(_gamma / ((180) / self.imglength));
+		//	e.gamma //横向翻转
+		var _gamma = Math.ceil(e.gamma +45);
+		_gamma=_gamma < 0 ? 0 : _gamma;
+		_gamma=_gamma > 90 ? 90 : _gamma
+		var _index = Math.floor(_gamma / (90/ self.imglength));
 		self.drawArrImg(_index);
 	}, false)
 };
@@ -64,15 +66,8 @@ imgArrShowPropty.loadWait = function(bool) {
 	var _bool = Boolean(bool);
 	var self = this;
 	if (_bool) {
-		//		var _img = new Image;
-		//		_img.src = self.loadimgsrc;
-		//		_img.onload = function() {
-		//			self.ctx.drawImage(_img, (self.width / 2 - 60), (self.height / 2 - 60))
-		//		}
 		self.loadingbox.style.display = 'block'
 	} else {
-		//		self.ctx.clearRect(0, 0, self.width, self.height)
-		//		self.drawArrImg(Math.floor(self.imgarr.length) / 2)
 		self.loadingbox.style.display = 'none'
 		self.drawArrImg(Math.floor(self.imgarr.length) / 2)
 	}
