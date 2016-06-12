@@ -110,7 +110,7 @@ function promptMes(cfg) {
 				'-webkit-transform': 'scale(0,0)',
 				'transform': 'scale(0,0)'
 			})
-			_prompt_box.on('webkitTransitionEnd', function() {
+			_prompt_box.on('webkitTransitionEnd transitionend', function() {
 				this.remove()
 				_prompt_box_bk.remove()
 			})
@@ -128,7 +128,7 @@ function promptMes(cfg) {
 			_html += ' <div class="down-btn mobile-fixed-promot-btn">知道了</div>'
 			_html += '</div>'
 			$('body').append(_html)
-			$(document).bind('click','.mobile-fixed-promot-btn',function(){
+			$(document).bind('tap','.mobile-fixed-promot-btn',function(){
 		     	_this.removePrompt()	
 			})
 			

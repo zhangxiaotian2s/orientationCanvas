@@ -13,6 +13,13 @@
 
 	<body class="bk-grey">
 		<div class="wrap">
+			<header class="top-down-bar clearfix pr">
+				<img src="images/huang-logo.jpg">
+				<h4>晃晃</h4>
+				<p>我也要玩， 赶快加入</p>
+				<a href="javascript:void(0)" class="pa">立即下载</a>
+			</header>
+			
 			<div class="detail-header  clearfix">
 				<div class="detail-header-mes">
 					<div class="detail-header-mes-img img-circle">
@@ -90,7 +97,7 @@
 			</div>
 			<div class="blank1"></div>
 			<div class="down-btn footer-down-btn">
-					立即下载
+					下载晃晃
 				</div>
 				<div class="blank1"></div>
 		</div>
@@ -110,6 +117,7 @@
 
 		</div>-->
   <script src="js/zeptoandtouch.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="js/zepto.cookie.js" ></script>
 		<script type="text/javascript" src="js/orientation.js"></script>
 		<script>
 			var myimgarr = ["http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_0.jpg",
@@ -131,8 +139,14 @@
 			]
 			var imgarrshow = new imgArrShow(myimgarr)
 			imgarrshow.init()
+			
 			var promptMes=new promptMes()
-			promptMes.mobile.first()
+			if($.cookie('firstopen')!=="true"){
+				$.cookie('firstopen',"true")
+				promptMes.mobile.first()
+			}
+			//测试清空cookie操作
+           //$.cookie('firstopen',"")
 		</script>
 
 	</body>
