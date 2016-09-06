@@ -13,26 +13,23 @@
 
 	<body class="bk-grey">
 		<div class="wrap">
-			<header class="top-down-bar clearfix pr">
-				<img src="images/huang-logo.jpg">
-				<h4>晃晃</h4>
-				<p>我也要玩， 赶快加入</p>
-				<a href="javascript:void(0)" class="pa">立即下载</a>
-			</header>
-			
+
 			<div class="detail-header  clearfix">
 				<div class="detail-header-mes">
 					<div class="detail-header-mes-img img-circle">
 						<img src="images/header.jpg" class="img-responsive">
 					</div>
 					那些年的小叮当
-   				</div>
+				</div>
 				<p class="detail-header-mes-time">
 					<span class="iconfont icon-time"></span> 5月7日 12:08
 				</p>
 			</div>
 			<div class="detail-canvasbox pr clearfix">
 				<canvas id="canvas" class="canvas" width="" height=""></canvas>
+				<div class="pa canvas-prompt-text" id="canvas-prompt-text">
+
+				</div>
 				<div class="pa loadingbox" id="loadingbox">
 					<img src="http://7xl619.com1.z0.glb.clouddn.com/load.gif?timer=2016" class="img-responsive">
 				</div>
@@ -95,14 +92,22 @@
 					</li>
 				</ul>
 			</div>
-			<div class="blank1"></div>
+			<!--<div class="blank1"></div>
 			<div class="down-btn footer-down-btn">
 					下载晃晃
 				</div>
-				<div class="blank1"></div>
+				<div class="blank1"></div>-->
 		</div>
-		
-		
+		<div class="blank1"></div>
+		<div class="blank2"></div>
+		<div class="blank2"></div>
+		<footer class="footer-down-bar clearfix pf" id="footer-fixed">
+			<img src="images/footer-fixed-logo.png">
+			<h4>晃晃</h4>
+			<p>我也要玩， 赶快加入</p>
+			<a href="javascript:void(0)" class="pa">立即下载</a>
+		</footer>
+
 		<!--<div class="fixed-footer pf">
 			<div class="footer-box pr">
 				<div class="footer-logo">
@@ -116,10 +121,18 @@
 			</div>
 
 		</div>-->
-  <script src="js/zeptoandtouch.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" src="js/zepto.cookie.js" ></script>
+		<script src="js/zeptoandtouch.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="js/orientation.js"></script>
 		<script>
+			//底部浮动 PC 处理
+			if(window.screen.width > 640) {
+				var footer_fixed = document.getElementById('footer-fixed');
+				footer_fixed.style.left = '50%';
+				footer_fixed.style.marginLeft = '-320px';
+				footer_fixed.style.padding = '0.5rem 19px';
+				document.getElementById('canvas-prompt-text').style.top='300px'
+			}
+
 			var myimgarr = ["http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_0.jpg",
 				"http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_1.jpg",
 				"http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_2.jpg",
@@ -136,17 +149,12 @@
 				"http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_13.jpg",
 				"http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_14.jpg",
 				"http://7xl619.com1.z0.glb.clouddn.com/sHVcBqxIZ7cC_15.jpg"
-			]
-			var imgarrshow = new imgArrShow(myimgarr)
-			imgarrshow.init()
-			
-			var promptMes=new promptMes()
-			if($.cookie('firstopen')!=="true"){
-				$.cookie('firstopen',"true")
-				promptMes.mobile.first()
-			}
+			];
+			var imgarrshow = new imgArrShow(myimgarr);
+			imgarrshow.init();
+
 			//测试清空cookie操作
-           //$.cookie('firstopen',"")
+			//$.cookie('firstopen',"")
 		</script>
 
 	</body>
