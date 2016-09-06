@@ -136,12 +136,12 @@ h1,h2,h3,h4,h5,h6{ font-weight: normal; }
 
 .down-btn{  right: 10px; top: 0.7rem;   background: #5189ff;  color: #FFFFFF; height: 2.6rem; overflow: hidden; padding: 0px 1rem; line-height: 2.6rem;border-radius: 4px; }
 .footer-down-btn{width: 30%; margin: auto;text-align: center; color: #FFFFFF;}
-
+.footer-down-btn a{ color: #FFFFFF; }
 .mobile-fixed-promot-bk{ background: url(../images/bk70.png); width: 100%; height: 100%; top: 0px; z-index: 1000000;}
 
-.mobile-fixed-promot-box { width: 100%; height: 100%; top: 0PX; z-index: 100000000;}
-.mobile-fixed-promot-box h2{ font-size: 1.4rem; line-height: 2.6rem; margin: 2rem auto 1rem; text-align: center; color: #FFFFFF;} 
-.mobile-fixed-promot-box img{  width: 80%; display: block; margin: auto;}
+.mobile-fixed-promot-box { width: 100%; height: 100%; top: 0px; z-index: 100000000;}
+.mobile-fixed-promot-box h2{ font-size: 1.4rem; line-height: 2.6rem; margin: 1.5rem auto 1rem; text-align: center; color: #FFFFFF;} 
+.mobile-fixed-promot-box img{  width: 70%; display: block; margin: auto; max-width:448px ;}
 .mobile-fixed-promot-btn{ width:  26%; margin:1.5rem auto; text-align: center;} 
 
 .footer-down-bar { background:url(../images/bk70.png); padding: 0.5rem 3%;   bottom: 0px; width: 94%; max-width: 602px; }

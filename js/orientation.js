@@ -1,10 +1,11 @@
-function imgArrShow(imgarr) {
+function imgArrShow(imgarr, angle) {
 	this.width = document.body.clientWidth > 640 ? 640 : document.body.clientWidth;
 	this.height = this.width;
 	this.canvas = document.getElementById('canvas');
 	this.promptmes = document.getElementById('canvas-prompt-text');
 	this.ctx = self.canvas.getContext('2d');
 	this.imgarr = imgarr;
+	this.angle = parseInt(angle) || 23;
 	this.imglength = this.imgarr.length;
 	this.loadimgsrc = 'http://7xl619.com1.z0.glb.clouddn.com/load.gif?10010'
 	this.loadingbox = document.querySelector('#loadingbox')
@@ -36,7 +37,7 @@ imgArrShowPropty.loadAllImg = function() {
 		_img.onload = function() {
 			_index++;
 			if(_index >= self.imglength) {
-				self.promptmes.style.display='block'
+				self.promptmes.style.display = 'block'
 				self.loadWait(false)
 			}
 		}
@@ -48,15 +49,15 @@ imgArrShowPropty.mobileDirection = function() {
 	window.addEventListener("deviceorientation", function(e) {
 
 		//	e.gamma //横向翻转
-		var _gamma = Math.ceil(e.gamma + 45);
+		var _gamma = Math.ceil(e.gamma + self.angle);
 		_gamma = _gamma < 0 ? 0 : _gamma;
-		_gamma = _gamma > 90 ? 90 : _gamma
-
-		if((_gamma < 35 || _gamma > 60) && (self.promptmes.style.opacity !== '0')) {
+		_gamma = _gamma > self.angle * 2 ? self.angle * 2 : _gamma;
+		var _index = Math.floor(_gamma / (self.angle * 2 / self.imglength));
+		if((_gamma < (self.angle-10) || _gamma > (self.angle+10)) && (self.promptmes.style.opacity !== '0')) {
 			self.promptmes.style.webkitTransitionDuration = '1s'
 			self.promptmes.style.opacity = '0'
 		}
-		var _index = Math.floor(_gamma / (90 / self.imglength));
+
 		self.drawArrImg(_index);
 	}, false)
 };
