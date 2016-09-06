@@ -19,10 +19,10 @@ imgArrShowPropty.init = function() {
 	self.loadWait(true)
 	self.loadAllImg();
 	if(Boolean(self.boolmobile)) {
-		self.promptmes.innerText='←左右倾斜手机观看动效→';
+		self.promptmes.innerText = '←左右倾斜手机观看动效→';
 		self.mobileDirection()
 	} else {
-		self.promptmes.innerText='←左右滑动鼠标观看动效→';
+		self.promptmes.innerText = '←左右滑动鼠标观看动效→';
 		self.pcMouseMove()
 	}
 };
@@ -36,6 +36,7 @@ imgArrShowPropty.loadAllImg = function() {
 		_img.onload = function() {
 			_index++;
 			if(_index >= self.imglength) {
+				self.promptmes.style.display='block'
 				self.loadWait(false)
 			}
 		}
@@ -50,10 +51,10 @@ imgArrShowPropty.mobileDirection = function() {
 		var _gamma = Math.ceil(e.gamma + 45);
 		_gamma = _gamma < 0 ? 0 : _gamma;
 		_gamma = _gamma > 90 ? 90 : _gamma
-		
-		if((_gamma<35||_gamma>60)&&(self.promptmes.style.opacity!=='0')){
-			self.promptmes.style.webkitTransitionDuration='1s'
-			self.promptmes.style.opacity='0'
+
+		if((_gamma < 35 || _gamma > 60) && (self.promptmes.style.opacity !== '0')) {
+			self.promptmes.style.webkitTransitionDuration = '1s'
+			self.promptmes.style.opacity = '0'
 		}
 		var _index = Math.floor(_gamma / (90 / self.imglength));
 		self.drawArrImg(_index);
@@ -67,8 +68,10 @@ imgArrShowPropty.pcMouseMove = function() {
 		_position_x < 0 ? 0 : _position_x;
 		var _index = Math.floor(_position_x / (self.width / self.imglength));
 		self.drawArrImg(_index);
-		self.promptmes.style.webkitTransitionDuration='1s'
-			self.promptmes.style.opacity='0'
+		if(self.promptmes.style.opacity !== '0') {
+			self.promptmes.style.webkitTransitionDuration = '1s';
+			self.promptmes.style.opacity = '0';
+		}
 	}, false)
 };
 // loading 状态处理
@@ -99,4 +102,4 @@ imgArrShowPropty.drawArrImg = function(index) {
 			self.ctx.drawImage(_img, 0, 0, _img_w, _img_h);
 		}
 	}
-};
+}
