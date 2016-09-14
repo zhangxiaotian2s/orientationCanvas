@@ -1,6 +1,6 @@
 function imgArrShow(imgarr, angle) {
 	this.width = document.body.clientWidth > 640 ? 640 : document.body.clientWidth;
-	this.height = this.width;
+	this.height = this.width;//默认
 	this.canvas = document.getElementById('canvas');
 	this.promptmes = document.getElementById('canvas-prompt-text');
 	this.ctx = self.canvas.getContext('2d');
@@ -15,10 +15,9 @@ function imgArrShow(imgarr, angle) {
 var imgArrShowPropty = imgArrShow.prototype
 imgArrShowPropty.init = function() {
 	var self = this
-	self.canvas.setAttribute('width', self.width + 'px');
-	self.canvas.setAttribute('height', self.height + 'px');
-	self.loadWait(true)
-	self.loadAllImg();
+	self.setInit()//重新设置 canvas 高度并后续
+	
+	
 	if(Boolean(self.boolmobile)) {
 		self.promptmes.innerText = '←左右倾斜手机观看动效→';
 		self.mobileDirection()
@@ -26,6 +25,25 @@ imgArrShowPropty.init = function() {
 		self.promptmes.innerText = '←左右滑动鼠标观看动效→';
 		self.pcMouseMove()
 	}
+};
+//提取第一张图片 来获取canvas 应该设置的高度
+imgArrShowPropty.setInit=function(){
+	var self=this;
+	var _img=new Image();
+	 _img.src=self.imgarr[0];
+	 _img.onload=function(){
+	     	self.height=Math.floor(_img.height*(self.width/_img.width))
+//	     	console.log(self.height)
+	     	//设置canvas 宽高
+	     	self.canvas.setAttribute('width', self.width + 'px');
+         	self.canvas.setAttribute('height', self.height + 'px');
+         	//设置提示的位置
+         	self.promptmes.style.top=(self.height/2-20)+'px';
+         	//显示 loading 加载图片
+         	self.loadWait(true)
+	        self.loadAllImg();
+	        
+	 }
 };
 //加载缓存所有图片，
 imgArrShowPropty.loadAllImg = function() {
@@ -80,7 +98,10 @@ imgArrShowPropty.loadWait = function(bool) {
 	var _bool = Boolean(bool);
 	var self = this;
 	if(_bool) {
-		self.loadingbox.style.display = 'block'
+		var _loading=self.loadingbox.querySelectorAll('img')[0]
+		self.loadingbox.style.display = 'block';
+		_loading.style.display='block'
+		_loading.style.marginTop=(self.height/2-20)+'px';
 	} else {
 		self.loadingbox.style.display = 'none'
 		self.drawArrImg(Math.floor(self.imgarr.length) / 2)
